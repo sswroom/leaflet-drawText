@@ -1,0 +1,23 @@
+{
+  "name": "@sswroom/leaflet-drawtext",
+  "version": "1.0.0",
+  "description": "A leaflet plugin which adds an icon to draw text",
+  "main": "index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sswroom/leaflet-drawText.git"
+  },
+  "scripts": {},
+  "keywords": [
+    "leaflet"
+  ],
+  "author": "Simon Wong <sswroom@yahoo.com>",
+  "bugs": {
+    "url": "https://github.com/sswroom/leaflet-drawText/issues"
+  },
+  "homepage": "https://github.com/sswroom/leaflet-drawText#readme",
+  "dependencies": {
+    "@sswroom/sswr": "^1.2.3"
+  }
+}

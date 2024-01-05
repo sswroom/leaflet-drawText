@@ -20,6 +20,10 @@ You can pass a number of options to the plugin to control various settings.
 | layer | Layer | null | The layer for adding new labels |
 | buttonClass | string | null | The class name of the dialog button |
 | dialogClass | string | null | The class name of the dialog content |
+| beforedialogshow | Function | null | Call when just before dialog show |
+| dialogMessage | string | 'Input label content' | Dialog message text |
+| addButton | string | 'Add' | Add button text |
+| cancelButton | string | 'Cancel' | Cancel button text |
 
 
 ### Example
@@ -36,8 +40,8 @@ drawText.create({
 ### Methods / Using programmatically
 | Method        | Options      | Description   |
 | --------------|--------------|--------------|
-| updateOptions(name, value) | Update options dynamitically | Update the options at runtime. |
+| updateOption(name, value) | Update options dynamitically | Update the options at runtime. |
 ````
 var textPlugin = drawText.create().addTo(map); 
-textPlugin.updateOptions('buttonClass', 'button');
+textPlugin.updateOption('buttonClass', 'button');
 ````

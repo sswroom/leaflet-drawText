@@ -7,16 +7,19 @@ L.Control.DrawText = L.Control.extend({
 		position: 'topleft',
 		layer: null,
 		buttonClass: null,
-		dialogClass: null
+		dialogClass: null,
+		beforedialogshow: null,
+		dialogMessage: "Input label content",
+		addButton: "Add",
+		cancelButton: "Cancel"
 	},
 
 	onAdd: function () { 
 		this._addCss();
 
 		this.mapContainer = this._map.getContainer();
-		var dialogContent = "Input label content<br/><input id=\"drawTextLabelInput\" type=\"text\"/>";
+		var dialogContent = text.toHTMLText(this.options.dialogMessage)+"<br/><input id=\"drawTextLabelInput\" type=\"text\"/>";
 		this.dialog = new web.Dialog(dialogContent, {zIndex: 1100, buttonClass: this.options.buttonClass, contentClass: this.options.dialogClass});
-		this.dialog.updateOption("buttons", [this.dialog.closeButton("Cancel"),{name:"Add",onclick:()=>{this._onDialogAdd();}}]);
 
 		var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
 		var btnClass = 'leaflet-control-drawText-button'
@@ -64,13 +67,21 @@ L.Control.DrawText = L.Control.extend({
 	},
 
 	_onMouseClick: function (e) {
-
+		if (this.options.beforedialogshow)
+			this.options.beforedialogshow();
+		var dialogContent = text.toHTMLText(this.options.dialogMessage)+"<br/><input id=\"drawTextLabelInput\" type=\"text\"/>";
+		this.dialog.setContent(dialogContent);
+		this.dialog.updateOption("buttons", [this.dialog.closeButton(this.options.cancelButton),{name:this.options.addButton,onclick:()=>{this._onDialogAdd();}}]);
 		this.dialog.show();
 		var txt = document.getElementById("drawTextLabelInput");
 		txt.focus();
 		txt.addEventListener("keydown", (e)=>{this._onKeyDown(e);});
 		this.labelPos = e.latlng;
 		this._cancelDraw();
+		if (this.options.ondialogshown)
+		{
+			this.options.ondialogshown();
+		}
 	},
 
 	_onDialogAdd: function() {
@@ -109,7 +120,7 @@ L.Control.DrawText = L.Control.extend({
 		document.body.appendChild(css);
 	},
 
-	updateOptions: function(name, value) {
+	updateOption: function(name, value) {
 		this.options[name] = value;
 	}
 

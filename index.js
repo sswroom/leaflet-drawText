@@ -1,3 +1,4 @@
+import * as text from "../sswr/text.js";
 import * as web from "../sswr/web.js";
 
 L.Control.DrawText = L.Control.extend({
@@ -14,8 +15,8 @@ L.Control.DrawText = L.Control.extend({
 
 		this.mapContainer = this._map.getContainer();
 		var dialogContent = "Input label content<br/><input id=\"drawTextLabelInput\" type=\"text\"/>";
-		var dialogButtons = [web.Dialog.closeButton("Cancel"),{name:"Add",onclick:()=>{this._onDialogAdd();}}];
-		this.dialog = new web.Dialog(dialogContent, {zIndex: 1100, buttonClass: this.options.buttonClass, contentClass: this.options.dialogClass, buttons: dialogButtons});
+		this.dialog = new web.Dialog(dialogContent, {zIndex: 1100, buttonClass: this.options.buttonClass, contentClass: this.options.dialogClass});
+		this.dialog.updateOption("buttons", [this.dialog.closeButton("Cancel"),{name:"Add",onclick:()=>{this._onDialogAdd();}}]);
 
 		var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
 		var btnClass = 'leaflet-control-drawText-button'
@@ -80,7 +81,7 @@ L.Control.DrawText = L.Control.extend({
 		}
 		else
 		{
-			newLabel(txt.value, this.labelPos).addTo(this.options.layer || this._map);
+			newLabel(text.toHTMLText(txt.value), this.labelPos).addTo(this.options.layer || this._map);
 			this.dialog.close();
 		}
 	},
@@ -101,8 +102,8 @@ L.Control.DrawText = L.Control.extend({
 		var css = document.createElement("style");
 		css.type = "text/css";
 		css.innerHTML = `.leaflet-control-drawText-button { 
-			background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBkPSJNMTI4LDMyaDI1NnY2NEgxMjhWMzJ6IE00ODAsMTI4SDMyYy0xNy42LDAtMzIsMTQuNC0zMiwzMnYxNjBjMCwxNy42LDE0LjM5OCwzMiwzMiwzMmg5NnYxMjhoMjU2VjM1Mmg5NiAgIGMxNy42LDAsMzItMTQuNCwzMi0zMlYxNjBDNTEyLDE0Mi40LDQ5Ny42LDEyOCw0ODAsMTI4eiBNMzUyLDQ0OEgxNjBWMjg4aDE5MlY0NDh6IE00ODcuMTk5LDE3NmMwLDEyLjgxMy0xMC4zODcsMjMuMi0yMy4xOTcsMjMuMiAgIGMtMTIuODEyLDAtMjMuMjAxLTEwLjM4Ny0yMy4yMDEtMjMuMnMxMC4zODktMjMuMiwyMy4xOTktMjMuMkM0NzYuODE0LDE1Mi44LDQ4Ny4xOTksMTYzLjE4Nyw0ODcuMTk5LDE3NnoiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
-			background-size: 16px 16px; 
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AEFCQIZZfEbAAAAARNJREFUSMftlj0OwjAMhb8iJmb2zJ1h5RLMzOUOHIA7wNwZDsFaZuay0pkVFhc9RahJARUEPCmSlR87eXZsA1wCIyMeWUhfj47RF/kMHEweAs5kB4wi9TmRS6AyOQUG9UL93KINNS1dUXwEpUO51UTmd0J1CKmcnXi68Sn9zihN5AUOWAiN+ZOUzkReWtSSyOaRROoamMvawJQ14WBfq8ZKHjMG9n7QhG5eBPbclDbhrd+iCZXR7PtJ/Vu90mApPs3EYC4XiULnlP4Nvi1KFVv5b8dHDGZ3imcq835qO9kIpTbNTFMt4r/T05SW1eviOZOsH9vTKI25uQOrQu43eprELDe1iUtgE6lvKkU82CZ+Z5ReAYMroOcQXqePAAAAAElFTkSuQmCC);
+			background-size: 24px 24px; 
 			cursor: pointer; 
 		}`;
 		document.body.appendChild(css);

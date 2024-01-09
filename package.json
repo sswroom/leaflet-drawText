@@ -1,6 +1,6 @@
 {
   "name": "@sswroom/leaflet-drawtext",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A leaflet plugin which adds an icon to draw text",
   "main": "index.js",
   "type": "module",
@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/sswroom/leaflet-drawText#readme",
   "dependencies": {
-    "@sswroom/sswr": "^1.2.3"
+    "@sswroom/sswr": "^1.3.0"
   }
 }

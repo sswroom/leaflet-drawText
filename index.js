@@ -11,7 +11,8 @@ L.Control.DrawText = L.Control.extend({
 		beforedialogshow: null,
 		dialogMessage: "Input label content",
 		addButton: "Add",
-		cancelButton: "Cancel"
+		cancelButton: "Cancel",
+		dialogMargin: 20
 	},
 
 	onAdd: function () { 
@@ -19,7 +20,7 @@ L.Control.DrawText = L.Control.extend({
 
 		this.mapContainer = this._map.getContainer();
 		var dialogContent = text.toHTMLText(this.options.dialogMessage)+"<br/><input id=\"drawTextLabelInput\" type=\"text\"/>";
-		this.dialog = new web.Dialog(dialogContent, {zIndex: 1100, buttonClass: this.options.buttonClass, contentClass: this.options.dialogClass});
+		this.dialog = new web.Dialog(dialogContent, {zIndex: 1100, buttonClass: this.options.buttonClass, contentClass: this.options.dialogClass, width: 200 + this.options.dialogMargin * 2, height: 150 + this.options.dialogMargin * 2, margin: this.options.dialogMargin});
 
 		var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
 		var btnClass = 'leaflet-control-drawText-button'
@@ -69,9 +70,11 @@ L.Control.DrawText = L.Control.extend({
 	_onMouseClick: function (e) {
 		if (this.options.beforedialogshow)
 			this.options.beforedialogshow();
-		var dialogContent = text.toHTMLText(this.options.dialogMessage)+"<br/><input id=\"drawTextLabelInput\" type=\"text\"/>";
+		var dialogContent = text.toHTMLText(this.options.dialogMessage)+"<br/><input id=\"drawTextLabelInput\" type=\"text\" style=\"width: 200px;\"/>";
 		this.dialog.setContent(dialogContent);
 		this.dialog.updateOption("buttons", [this.dialog.closeButton(this.options.cancelButton),{name:this.options.addButton,onclick:()=>{this._onDialogAdd();}}]);
+		if (this.options.dialogClass)
+			this.dialog.updateOption("contentClass", this.options.dialogClass);
 		this.dialog.show();
 		var txt = document.getElementById("drawTextLabelInput");
 		txt.focus();

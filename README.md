@@ -24,6 +24,7 @@ You can pass a number of options to the plugin to control various settings.
 | dialogMessage | string | 'Input label content' | Dialog message text |
 | addButton | string | 'Add' | Add button text |
 | cancelButton | string | 'Cancel' | Cancel button text |
+| dialogMargin | number | 20 | Margin of dialog box |
 
 
 ### Example

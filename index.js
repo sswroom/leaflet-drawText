@@ -19,17 +19,17 @@ L.Control.DrawText = L.Control.extend({
 		this._addCss();
 
 		this.mapContainer = this._map.getContainer();
-		var dialogContent = text.toHTMLText(this.options.dialogMessage)+"<br/><input id=\"drawTextLabelInput\" type=\"text\"/>";
+		let dialogContent = text.toHTMLText(this.options.dialogMessage)+"<br/><input id=\"drawTextLabelInput\" type=\"text\"/>";
 		this.dialog = new web.Dialog(dialogContent, {zIndex: 1100, buttonClass: this.options.buttonClass, contentClass: this.options.dialogClass, width: 200 + this.options.dialogMargin * 2, height: 150 + this.options.dialogMargin * 2, margin: this.options.dialogMargin});
 
-		var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-		var btnClass = 'leaflet-control-drawText-button'
+		let container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+		let btnClass = 'leaflet-control-drawText-button'
 		this.link = L.DomUtil.create('a', btnClass, container);
 		this.link.id = "leafletDrawText";
 		this.link.title = this.options.title;
 		this.holder = L.DomUtil.create('ul', 'leaflet-draw-actions leaflet-draw-actions-bottom', container);
-		var btn = L.DomUtil.create('li', '', this.holder);
-		var link = L.DomUtil.create('a', '', btn);
+		let btn = L.DomUtil.create('li', '', this.holder);
+		let link = L.DomUtil.create('a', '', btn);
 		link.title = 'Cancel drawing';
 		link.innerText = 'Cancel';
 		L.DomEvent.addListener(link, 'click', this._cancelDraw, this);
@@ -70,13 +70,13 @@ L.Control.DrawText = L.Control.extend({
 	_onMouseClick: function (e) {
 		if (this.options.beforedialogshow)
 			this.options.beforedialogshow();
-		var dialogContent = text.toHTMLText(this.options.dialogMessage)+"<br/><input id=\"drawTextLabelInput\" type=\"text\" style=\"width: 200px;\"/>";
+		let dialogContent = text.toHTMLText(this.options.dialogMessage)+"<br/><input id=\"drawTextLabelInput\" type=\"text\" style=\"width: 200px;\"/>";
 		this.dialog.setContent(dialogContent);
 		this.dialog.updateOption("buttons", [this.dialog.closeButton(this.options.cancelButton),{name:this.options.addButton,onclick:()=>{this._onDialogAdd();}}]);
 		if (this.options.dialogClass)
 			this.dialog.updateOption("contentClass", this.options.dialogClass);
 		this.dialog.show();
-		var txt = document.getElementById("drawTextLabelInput");
+		let txt = document.getElementById("drawTextLabelInput");
 		txt.focus();
 		txt.addEventListener("keydown", (e)=>{this._onKeyDown(e);});
 		this.labelPos = e.latlng;
@@ -88,7 +88,7 @@ L.Control.DrawText = L.Control.extend({
 	},
 
 	_onDialogAdd: function() {
-		var txt = document.getElementById("drawTextLabelInput");
+		let txt = document.getElementById("drawTextLabelInput");
 		if (txt.value.length == 0)
 		{
 			alert("Please input a label");
@@ -106,14 +106,14 @@ L.Control.DrawText = L.Control.extend({
 		}
 		if (e.key == "Enter")
 		{
-			var txt = document.getElementById("drawTextLabelInput");
+			let txt = document.getElementById("drawTextLabelInput");
 			if (txt.value.length > 0)
 				this._onDialogAdd();
 		}
 	},
 
 	_addCss: function () {
-		var css = document.createElement("style");
+		let css = document.createElement("style");
 		css.type = "text/css";
 		css.innerHTML = `.leaflet-control-drawText-button { 
 			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AEFCQIZZfEbAAAAARNJREFUSMftlj0OwjAMhb8iJmb2zJ1h5RLMzOUOHIA7wNwZDsFaZuay0pkVFhc9RahJARUEPCmSlR87eXZsA1wCIyMeWUhfj47RF/kMHEweAs5kB4wi9TmRS6AyOQUG9UL93KINNS1dUXwEpUO51UTmd0J1CKmcnXi68Sn9zihN5AUOWAiN+ZOUzkReWtSSyOaRROoamMvawJQ14WBfq8ZKHjMG9n7QhG5eBPbclDbhrd+iCZXR7PtJ/Vu90mApPs3EYC4XiULnlP4Nvi1KFVv5b8dHDGZ3imcq835qO9kIpTbNTFMt4r/T05SW1eviOZOsH9vTKI25uQOrQu43eprELDe1iUtgE6lvKkU82CZ+Z5ReAYMroOcQXqePAAAAAElFTkSuQmCC);
@@ -135,7 +135,7 @@ L.drawText = function(options) {
 
 export function newLabel(text, latlng, options)
 {
-	var marker = new L.marker(latlng, { opacity: 0.001 }); //opacity may be set to zero
+	let marker = new L.marker(latlng, { opacity: 0.001 }); //opacity may be set to zero
 	if (options == null)
 		options = {};
 	options.permanent = true;

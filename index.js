@@ -95,7 +95,8 @@ L.Control.DrawText = L.Control.extend({
 		}
 		else
 		{
-			newLabel(text.toHTMLText(txt.value), this.labelPos).addTo(this.options.layer || this._map);
+			let dir = {direction: "center"};
+			newLabel(text.toHTMLText(txt.value), this.labelPos, dir).addTo(this.options.layer || this._map);
 			this.dialog.close();
 		}
 	},
@@ -135,7 +136,8 @@ L.drawText = function(options) {
 
 export function newLabel(text, latlng, options)
 {
-	let marker = new L.marker(latlng, { opacity: 0.001 }); //opacity may be set to zero
+	let icon = L.divIcon({iconSize: [1, 1]});
+	let marker = new L.marker(latlng, { icon: icon, opacity: 0.001 }); //opacity may be set to zero
 	if (options == null)
 		options = {};
 	options.permanent = true;
